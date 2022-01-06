@@ -1,3 +1,3 @@
-# EventplannerProject
+# EventplannerProject BACKEND
 
 BACK END of EVENT PLANNER APP
