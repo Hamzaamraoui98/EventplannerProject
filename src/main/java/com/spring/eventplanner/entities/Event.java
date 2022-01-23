@@ -12,10 +12,10 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class Event {
-    public static int TYPE_CONCERT = 1;
+    /*public static int TYPE_CONCERT = 1;
     public static int TYPE_REUNION = 2;
     public static int TYPE_CINEMA = 3;
-
+    */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -25,7 +25,10 @@ public class Event {
     String description;
     Date date_debut;
     Date date_fin;
-    int typeEvent;
+   /* @OneToMany
+    List<DateEvent> dateEventList;*/
+    @ManyToOne
+    TypeEvent typeEvent;
     String file;
     @OneToMany(mappedBy = "event")
     List<UserEvent> userEventStatus;

@@ -1,10 +1,8 @@
 package com.spring.eventplanner.web;
 
-import com.spring.eventplanner.entities.Event;
-import com.spring.eventplanner.entities.User;
-import com.spring.eventplanner.entities.UserEvent;
-import com.spring.eventplanner.entities.UserEventId;
+import com.spring.eventplanner.entities.*;
 import com.spring.eventplanner.repositories.EventRepository;
+import com.spring.eventplanner.repositories.TypeEventRepository;
 import com.spring.eventplanner.repositories.UserEventRepository;
 import com.spring.eventplanner.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +14,15 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class EventRestController {
     @Autowired
     private EventRepository eventRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TypeEventRepository typeEventRepository;
     @Autowired
     private UserEventRepository userEventRepository;
 
@@ -31,8 +33,8 @@ public class EventRestController {
         UserEventId key = new UserEventId(user.getId(), newlyAddedEvent.getId());
         UserEvent toSave = new UserEvent(key, user, newlyAddedEvent, UserEvent.STATUS_CREATOR);
         userEventRepository.save(toSave);
-
-        List<UserEvent> userEventStatus = event.getUserEventStatus();
+        System.out.println("nombre d objects usereventstatus="+event.getUserEventStatus().size());
+        List <UserEvent> userEventStatus=event.getUserEventStatus();
         for (UserEvent oneUserEvent : userEventStatus) {
             User user_invited = oneUserEvent.getUser();
             UserEventId key_invited = new UserEventId(user_invited.getId(), newlyAddedEvent.getId());
@@ -133,6 +135,10 @@ public class EventRestController {
         UserEvent updatedUserEvent = userEventRepository.save(toUpdate);
 
         return new ResponseEntity<>(updatedUserEvent, HttpStatus.OK);
+    }
+    @GetMapping(path="/gettypeevents")
+    public List<TypeEvent> getalltypevents(){
+        return typeEventRepository.findAll();
     }
 }
 
