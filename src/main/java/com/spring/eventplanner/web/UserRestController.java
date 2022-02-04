@@ -28,7 +28,6 @@ public class UserRestController {
     public User addNewUser(@RequestBody User user ){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
        return userRepository.save(user);
-
     }
 
 
@@ -37,5 +36,10 @@ public class UserRestController {
     public List<User> getAllUserNames(){
         return userRepository.findAll();
 
+    }
+    
+    @GetMapping(path="/user/{username}")
+    public User getByUsername(@PathVariable String username){
+        return userRepository.findByUsername(username).get(0);
     }
 }

@@ -1,12 +1,10 @@
 package com.spring.eventplanner;
 
-import com.spring.eventplanner.entities.Event;
-import com.spring.eventplanner.entities.TypeEvent;
-import com.spring.eventplanner.entities.User;
+import com.spring.eventplanner.entities.*;
 
-import com.spring.eventplanner.repositories.EventRepository;
-import com.spring.eventplanner.repositories.TypeEventRepository;
-import com.spring.eventplanner.repositories.UserRepository;
+import com.spring.eventplanner.repositories.*;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,9 +26,9 @@ public class EventPlannerApplication {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+    
     @Bean
-    CommandLineRunner start(UserRepository userRepository, EventRepository eventRepository, TypeEventRepository typeEventRepository){
+    CommandLineRunner start(UserRepository userRepository, EventRepository eventRepository, TypeEventRepository typeEventRepository ,UserEventRepository userEventRepository){
        return args -> {
 /*
           eventRepository.save(new Event(null,"conférence sur l'étude à l'étranger","École d’Ingénieurs SeaTech - Université de Toulon, Av. de l'Université, 83130 La Garde","une conférence organisée par le service des relations internationl",new Date(),new Date(), Event.TYPE_REUNION,null,null));
@@ -39,23 +37,49 @@ public class EventPlannerApplication {
 
 */
            //initialiser databse par des users
-            userRepository.save(new User(null,"hamza","amraoui","hamzaamraoui",null,"amraouihamza50@gmail.com",bCryptPasswordEncoder().encode("hamza123"),"mybio",null));
-
-            userRepository.save(new User(null,"test","test","test",null,"test@gmail.com", bCryptPasswordEncoder().encode("asmae123"), "mybio",null));
-            userRepository.save(new User(null,"asmae","majdoub","asmaemajdoub",null,"asmaemajdoub@gmail.com", bCryptPasswordEncoder().encode("asmae123"), "mybio",null));
-
-           userRepository.findAll().forEach(user -> {
-                System.out.println(user.getFirstname());
-            });
-           //initisaliser database par des types d evenement
+    	   User hamza=new User(null,"hamza","amraoui","hamzaamraoui",null,"amraouihamza50@gmail.com",bCryptPasswordEncoder().encode("hamza123"),"mybio",null);
+	   	   User asmae=new User(null,"asmae","majdoub","asmaemajdoub",null,"asmaemajdoub@gmail.com",bCryptPasswordEncoder().encode("asmae123"),"mybio",null);
+	   	   User alberto=new User(null,"alberto","rodriguez","albertorod",null,"alberto@gmail.com",bCryptPasswordEncoder().encode("alberto123"),"mybio",null);
+	   	    
+	   	   User hamzaaded=userRepository.save(hamza);
+	       User asmaeaded=userRepository.save(asmae);
+	       User albertoaded=userRepository.save(alberto);
+	       
+	       //initisaliser database par des types d evenement
            typeEventRepository.save(new TypeEvent(null,"Conference",null));
            typeEventRepository.save(new TypeEvent(null,"Meeting",null));
            typeEventRepository.save(new TypeEvent(null,"Party",null));
            typeEventRepository.save(new TypeEvent(null,"Concert",null));
            typeEventRepository.save(new TypeEvent(null,"Weeding",null));
            typeEventRepository.save(new TypeEvent(null,"Other",null));
-
-
+           
+           typeEventRepository.findAll().forEach(type -> {
+               System.out.println(type.getName());
+           });
+           
+	       
+	       //initialize database with events
+	       Event event1=new Event(null,"conference sur l'etude a  l'etranger","ecole d'Ingenieurs SeaTech - Universite de Toulon, Av. de l'Universite, 83130 La Garde","une conference organisee par le service des relations internationl",new Date(),new Date(),typeEventRepository.findAll().get(0),null,null);
+	       eventRepository.save(event1);
+	 	   Event event2=new Event(null,"Silent Wristwatch Film Festival","adresse1","rain assault gang jeans monofilament cyber- 3D-printed marketing. cartel Legba rebar saturation point garage numinous boy gang. gang apophenia physical market nodality digital weathered vinyl. render-farm boat office kanji garage -space car shoes. footage stimulate futurity franchise realism sign sensory office.",new Date(),new Date(), typeEventRepository.findAll().get(1),null,null);
+	       eventRepository.save(event2);
+	       Event event3=new Event(null,"Augmented Reality Dolphin Drone Demo","adresse2","convenience store advert DIY A.I. franchise warehouse neural uplink. singularity sensory denim Tokyo vinyl skyscraper meta- skyscraper. marketing disposable tower knife plastic artisanal euro-pop concrete. hotdog cardboard dolphin network assassin dolphin receding dome. apophenia woman disposable Kowloon realism long-chain hydrocarbons boat tank-traps.",new Date(),new Date(), typeEventRepository.findAll().get(3),null,null);
+	       eventRepository.save(event3);
+	       
+	       userEventRepository.save(new UserEvent(new UserEventId(hamzaaded.getId(), event1.getId()),hamza,event1,1));
+	       userEventRepository.save(new UserEvent(new UserEventId(asmaeaded.getId(), event1.getId()),asmae,event1,2));
+	         
+	       userEventRepository.save(new UserEvent(new UserEventId(asmaeaded.getId(), event2.getId()),asmae,event2,1));
+	       userEventRepository.save(new UserEvent(new UserEventId(hamzaaded.getId(), event2.getId()),hamza,event2,2));
+	       userEventRepository.save(new UserEvent(new UserEventId(albertoaded.getId(), event2.getId()),alberto,event2,3));
+	       
+	       userEventRepository.save(new UserEvent(new UserEventId(albertoaded.getId(), event3.getId()),alberto,event3,1));
+	       userEventRepository.save(new UserEvent(new UserEventId(asmaeaded.getId(), event3.getId()),asmae,event3,4));
+	       
+           userRepository.findAll().forEach(user -> {
+                System.out.println(user.getFirstname());
+            });
+          
        };
 
 

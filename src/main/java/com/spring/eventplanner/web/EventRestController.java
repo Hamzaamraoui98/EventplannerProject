@@ -41,7 +41,7 @@ public class EventRestController {
             toSave = new UserEvent(key_invited, user_invited, newlyAddedEvent, UserEvent.STATUS_INVITED);
             userEventRepository.save(toSave);
         }
-        }
+    }
 
 
 
@@ -50,7 +50,7 @@ public class EventRestController {
         return eventRepository.findAll();
     }
 
-    @GetMapping(path="Events/{id}")
+    @GetMapping(path="events/{id}")
     public Event getEvent( @PathVariable long id ){
         return eventRepository.findById(id).get();
     }

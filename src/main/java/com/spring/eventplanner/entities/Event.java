@@ -22,6 +22,7 @@ public class Event {
     @Column(nullable=false)
     String title;
     String adresse;
+    @Column( length = 100000 )
     String description;
     Date date_debut;
     Date date_fin;
