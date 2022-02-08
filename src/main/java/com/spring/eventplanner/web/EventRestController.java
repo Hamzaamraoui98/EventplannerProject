@@ -1,6 +1,7 @@
 package com.spring.eventplanner.web;
 
 import com.spring.eventplanner.entities.*;
+import com.spring.eventplanner.repositories.DateEventRepository;
 import com.spring.eventplanner.repositories.EventRepository;
 import com.spring.eventplanner.repositories.TypeEventRepository;
 import com.spring.eventplanner.repositories.UserEventRepository;
@@ -25,10 +26,11 @@ public class EventRestController {
     private TypeEventRepository typeEventRepository;
     @Autowired
     private UserEventRepository userEventRepository;
-
+    @Autowired
+    private DateEventRepository dateEventRepository;
     @PostMapping(path = "{username}/events/add")
     private void addEvent(@PathVariable String username, @RequestBody Event event) {
-        Event newlyAddedEvent = eventRepository.save(event);
+    	Event newlyAddedEvent = eventRepository.save(event);
         User user=userRepository.findByUsername(username).get(0);
         UserEventId key = new UserEventId(user.getId(), newlyAddedEvent.getId());
         UserEvent toSave = new UserEvent(key, user, newlyAddedEvent, UserEvent.STATUS_CREATOR);
@@ -40,6 +42,11 @@ public class EventRestController {
             UserEventId key_invited = new UserEventId(user_invited.getId(), newlyAddedEvent.getId());
             toSave = new UserEvent(key_invited, user_invited, newlyAddedEvent, UserEvent.STATUS_INVITED);
             userEventRepository.save(toSave);
+        }
+        //ajout des dates
+        List<DateEvent> dateEventList=event.getEvent_dates();
+        for(DateEvent onedate:dateEventList){
+            dateEventRepository.save(new DateEvent(null,onedate.getStart(),onedate.getEnd(),newlyAddedEvent));
         }
     }
 

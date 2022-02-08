@@ -18,6 +18,7 @@ public class TypeEvent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    @Column(nullable = false)
     String name;
     @OneToMany(mappedBy = "typeEvent")
     @JsonIgnore

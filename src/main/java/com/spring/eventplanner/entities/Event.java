@@ -22,12 +22,12 @@ public class Event {
     @Column(nullable=false)
     String title;
     String adresse;
-    @Column( length = 100000 )
+    @Column( length = 100000, nullable = false )
     String description;
     Date date_debut;
     Date date_fin;
-   /* @OneToMany
-    List<DateEvent> dateEventList;*/
+    @OneToMany(mappedBy = "event")
+    List<DateEvent> event_dates;
     @ManyToOne
     TypeEvent typeEvent;
     String file;
