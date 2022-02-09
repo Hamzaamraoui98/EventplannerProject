@@ -76,7 +76,7 @@ public class EventRestController {
     public List<Event> getCreatedMeetings(@PathVariable String username) {
         return getEvents(username,UserEvent.STATUS_CREATOR);
     }
-
+    
     private List<Event> getEvents(String aUsername, int aEventStatus) {
         List<User> users = userRepository.findByUsername(aUsername);
         User relevantUser = users.get(0);
