@@ -19,7 +19,7 @@ public class DateEvent {
     Long id;
     Date start;
     Date end;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinColumn(name = "event_id")
     @JsonIgnore
     Event event;
