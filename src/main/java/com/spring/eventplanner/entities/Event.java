@@ -26,12 +26,12 @@ public class Event {
     String description;
     Date date_debut;
     Date date_fin;
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event" ,cascade = CascadeType.REMOVE)
     List<DateEvent> event_dates;
     @ManyToOne
     TypeEvent typeEvent;
     String file;
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event",cascade = CascadeType.REMOVE)
     List<UserEvent> userEventStatus;
 
 }

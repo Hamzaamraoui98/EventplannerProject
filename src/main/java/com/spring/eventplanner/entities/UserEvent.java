@@ -20,11 +20,11 @@ public class UserEvent {
 
     @EmbeddedId
     UserEventId id;
-    @ManyToOne
+    @ManyToOne()
     @MapsId("userId")
     @JoinColumn(name = "user_id")
     User user;
-    @ManyToOne
+    @ManyToOne()
     @MapsId("eventId")
     @JoinColumn(name = "event_id")
     @JsonIgnore

@@ -76,6 +76,10 @@ public class EventRestController {
     public List<Event> getCreatedMeetings(@PathVariable String username) {
         return getEvents(username,UserEvent.STATUS_CREATOR);
     }
+    @GetMapping(path = "{username}/events/rejected")
+    public List<Event> getRejectedMeetings(@PathVariable String username) {
+        return getEvents(username,UserEvent.STATUS_REJECTED);
+    }
 
     private List<Event> getEvents(String aUsername, int aEventStatus) {
         List<User> users = userRepository.findByUsername(aUsername);
@@ -142,6 +146,14 @@ public class EventRestController {
         UserEvent updatedUserEvent = userEventRepository.save(toUpdate);
 
         return new ResponseEntity<>(updatedUserEvent, HttpStatus.OK);
+    }
+
+    //supprimer un evenement
+    @DeleteMapping(path="deleteevent/{id}")
+    public ResponseEntity<String> deleteevent(@PathVariable Long id){
+        System.out.println("je vais supprimer un evenement");
+        eventRepository.deleteById(id);
+        return new ResponseEntity<String>("event is deleted successfully.!", HttpStatus.OK);
     }
     @GetMapping(path="/gettypeevents")
     public List<TypeEvent> getalltypevents(){
