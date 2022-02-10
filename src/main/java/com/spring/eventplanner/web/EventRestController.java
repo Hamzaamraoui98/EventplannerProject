@@ -28,7 +28,7 @@ public class EventRestController {
     private UserEventRepository userEventRepository;
     @Autowired
     private DateEventRepository dateEventRepository;
-    @PostMapping(path = "{username}/events/add")
+    @PostMapping(path = "{username}/events/add",consumes={"application/json"})
     private void addEvent(@PathVariable String username, @RequestBody Event event) {
     	Event newlyAddedEvent = eventRepository.save(event);
         User user=userRepository.findByUsername(username).get(0);
@@ -59,7 +59,13 @@ public class EventRestController {
 
     @GetMapping(path="events/{id}")
     public Event getEvent( @PathVariable long id ){
-        return eventRepository.findById(id).get();
+
+            try{ return eventRepository.findById(id).get();}
+            catch (Exception e){
+                return null;
+            }
+
+
     }
 
     @GetMapping(path = "{username}/events/pending")

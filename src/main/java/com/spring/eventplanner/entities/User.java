@@ -33,9 +33,9 @@ public class User {
     @OneToMany(mappedBy = "user")
     List<UserEvent> userEventStatus;
     @OneToMany(mappedBy="to")
-    @JsonManagedReference
+
     private List<Contact> followers;
     @OneToMany(mappedBy="from")
-    @JsonManagedReference
+
     private List<Contact> following;
 }

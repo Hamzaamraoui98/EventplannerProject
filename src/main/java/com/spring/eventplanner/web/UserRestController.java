@@ -29,7 +29,7 @@ public class UserRestController {
     @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @PostMapping(path = "/users")
+    @PostMapping(path = "/users", consumes={"application/json"})
     public User addNewUser(@RequestBody User user ){
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
        return userRepository.save(user);
