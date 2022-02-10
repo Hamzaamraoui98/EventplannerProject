@@ -9,4 +9,5 @@ import java.util.List;
 public interface UserEventRepository extends JpaRepository<UserEvent, UserEventId> {
     List<UserEvent> findByStatut(int eventStatus );
     List<UserEvent> findByEvent( Event event );
+    
 }
