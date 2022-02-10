@@ -28,7 +28,7 @@ public class EventPlannerApplication {
     }
     
     @Bean
-    CommandLineRunner start(UserRepository userRepository, EventRepository eventRepository, TypeEventRepository typeEventRepository ,UserEventRepository userEventRepository){
+    CommandLineRunner start(UserRepository userRepository, EventRepository eventRepository, TypeEventRepository typeEventRepository ,UserEventRepository userEventRepository,ContactRepository contactRepository){
        return args -> {
 /*
           eventRepository.save(new Event(null,"conférence sur l'étude à l'étranger","École d’Ingénieurs SeaTech - Université de Toulon, Av. de l'Université, 83130 La Garde","une conférence organisée par le service des relations internationl",new Date(),new Date(), Event.TYPE_REUNION,null,null));
@@ -37,14 +37,14 @@ public class EventPlannerApplication {
 
 */
            //initialiser databse par des users
-    	   User hamza=new User(null,"hamza","amraoui","hamzaamraoui",null,"amraouihamza50@gmail.com",bCryptPasswordEncoder().encode("hamza123"),"mybio",null);
-	   	   User asmae=new User(null,"asmae","majdoub","asmaemajdoub",null,"asmaemajdoub@gmail.com",bCryptPasswordEncoder().encode("asmae123"),"mybio",null);
-	   	   User alberto=new User(null,"alberto","rodriguez","albertorod",null,"alberto@gmail.com",bCryptPasswordEncoder().encode("alberto123"),"mybio",null);
+    	   User hamza=new User(null,"hamza","amraoui","hamzaamraoui",null,"amraouihamza50@gmail.com",bCryptPasswordEncoder().encode("hamza123"),"mybio",null,null,null);
+	   	   User asmae=new User(null,"asmae","majdoub","asmaemajdoub",null,"asmaemajdoub@gmail.com",bCryptPasswordEncoder().encode("asmae123"),"mybio",null,null,null);
+	   	   User alberto=new User(null,"alberto","rodriguez","albertorod",null,"alberto@gmail.com",bCryptPasswordEncoder().encode("alberto123"),"mybio",null,null,null);
 	   	    
 	   	   User hamzaaded=userRepository.save(hamza);
 	       User asmaeaded=userRepository.save(asmae);
 	       User albertoaded=userRepository.save(alberto);
-	       
+	       contactRepository.save(new Contact(null,hamzaaded,asmaeaded));
 	       //initisaliser database par des types d evenement
            typeEventRepository.save(new TypeEvent(null,"Conference",null));
            typeEventRepository.save(new TypeEvent(null,"Meeting",null));

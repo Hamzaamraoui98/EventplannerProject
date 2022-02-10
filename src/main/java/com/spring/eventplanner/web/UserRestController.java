@@ -1,6 +1,9 @@
 package com.spring.eventplanner.web;
 
+import com.spring.eventplanner.entities.Contact;
 import com.spring.eventplanner.entities.User;
+import com.spring.eventplanner.entities.UserEvent;
+import com.spring.eventplanner.repositories.ContactRepository;
 import com.spring.eventplanner.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -22,6 +25,8 @@ public class UserRestController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private ContactRepository contactRepository;
+    @Autowired
     BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping(path = "/users")
@@ -42,4 +47,25 @@ public class UserRestController {
     public User getByUsername(@PathVariable String username){
         return userRepository.findByUsername(username).get(0);
     }
+
+    @GetMapping(path="{usernamefrom}/{usernameto}/addcontact")
+    public Contact addcontact(@PathVariable String usernamefrom,@PathVariable String  usernameto){
+        System.out.println("i wanna add contact");
+        User from=userRepository.findByUsername(usernamefrom).get(0);
+        User to=userRepository.findByUsername(usernameto).get(0);
+        Contact contact=new Contact(null,from,to);
+        return contactRepository.save(contact);
+    }
+
+    /*
+    @GetMapping(path="{username}/getcontact/")
+    public List<Contact> getcontacts(@PathVariable String username){
+
+        User from=userRepository.findByUsername(username).get(0);
+        return contactRepository.find
+    }
+    */
+
+
+
 }

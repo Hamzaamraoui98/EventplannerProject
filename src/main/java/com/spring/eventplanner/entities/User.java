@@ -1,6 +1,7 @@
 package com.spring.eventplanner.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,5 +32,10 @@ public class User {
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     List<UserEvent> userEventStatus;
-
+    @OneToMany(mappedBy="to")
+    @JsonManagedReference
+    private List<Contact> followers;
+    @OneToMany(mappedBy="from")
+    @JsonManagedReference
+    private List<Contact> following;
 }
