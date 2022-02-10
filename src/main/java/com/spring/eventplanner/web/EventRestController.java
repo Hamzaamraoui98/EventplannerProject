@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 
@@ -66,6 +67,25 @@ public class EventRestController {
     public List<Event> getPendingMeetings(@PathVariable String username) {
         return getEvents(username,UserEvent.STATUS_INVITED);
     }
+    
+    @GetMapping(path = "{username}/events/visit")
+    public List<Event> getPendingMeetingsNotVisited(@PathVariable String username) {
+    	List<User> users = userRepository.findByUsername(username);
+        User relevantUser = users.get(0);
+        //System.out.println(relevantUser.getFirstname());
+        List<Event> res = new ArrayList<>();
+        List<UserEvent> pendingUserMeetings = userEventRepository.findByStatut(UserEvent.STATUS_INVITED);
+        pendingUserMeetings = pendingUserMeetings.stream().filter(e->!e.isShowed()).collect(Collectors.toList());
+        
+        for (UserEvent oneUserEvent : pendingUserMeetings) {
+            UserEventId key = oneUserEvent.getId();
+
+            if (key.getUserId() == relevantUser.getId() )
+                res.add(eventRepository.findById(key.getEventId()).get());
+        }
+
+        return res;
+    }
 
     @GetMapping(path = "{username}/events/accepted")
     public List<Event> getAcceptedMeetings(@PathVariable String username) {
@@ -76,15 +96,12 @@ public class EventRestController {
     public List<Event> getCreatedMeetings(@PathVariable String username) {
         return getEvents(username,UserEvent.STATUS_CREATOR);
     }
-<<<<<<< HEAD
-    
-=======
+
     @GetMapping(path = "{username}/events/rejected")
     public List<Event> getRejectedMeetings(@PathVariable String username) {
         return getEvents(username,UserEvent.STATUS_REJECTED);
     }
 
->>>>>>> 29b3bb34e710b15019d9dcedfbe64b71f2d9f2c7
     private List<Event> getEvents(String aUsername, int aEventStatus) {
         List<User> users = userRepository.findByUsername(aUsername);
         User relevantUser = users.get(0);
@@ -163,6 +180,8 @@ public class EventRestController {
     public List<TypeEvent> getalltypevents(){
         return typeEventRepository.findAll();
     }
+    
+    
 }
 
 

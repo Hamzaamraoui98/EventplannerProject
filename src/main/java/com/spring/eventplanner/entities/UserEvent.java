@@ -5,13 +5,17 @@ import com.fasterxml.jackson.databind.util.ClassUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.Immutable;
+
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Data
+
 public class UserEvent {
     public static int STATUS_CREATOR = 1;
     public static int STATUS_INVITED = 2;
@@ -30,4 +34,12 @@ public class UserEvent {
     @JsonIgnore
     Event event;
     int statut;
+    boolean showed = false; 
+    
+    public UserEvent(UserEventId id,User user,Event event,int statut) {
+    	this.id=id;
+    	this.user= user;
+    	this.event=event;
+    	this.statut=statut;
+    }
 }
