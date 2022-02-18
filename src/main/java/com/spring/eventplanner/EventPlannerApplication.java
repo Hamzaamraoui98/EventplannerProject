@@ -37,9 +37,9 @@ public class EventPlannerApplication {
 
 */
            //initialiser databse par des users
-    	   User hamza=new User(null,"hamza","amraoui","hamzaamraoui",null,"amraouihamza50@gmail.com",bCryptPasswordEncoder().encode("hamza123"),"mybio",null,null,null);
-	   	   User asmae=new User(null,"asmae","majdoub","asmaemajdoub",null,"asmaemajdoub@gmail.com",bCryptPasswordEncoder().encode("asmae123"),"mybio",null,null,null);
-	   	   User alberto=new User(null,"alberto","rodriguez","albertorod",null,"alberto@gmail.com",bCryptPasswordEncoder().encode("alberto123"),"mybio",null,null,null);
+    	   User hamza=new User(null,"hamza","amraoui","hamzaamraoui",null,"amraouihamza50@gmail.com",bCryptPasswordEncoder().encode("hamza123"),"mybio",null,null,null,null);
+	   	   User asmae=new User(null,"asmae","majdoub","asmaemajdoub",null,"asmaemajdoub@gmail.com",bCryptPasswordEncoder().encode("asmae123"),"mybio",null,null,null,null);
+	   	   User alberto=new User(null,"alberto","rodriguez","albertorod",null,"alberto@gmail.com",bCryptPasswordEncoder().encode("alberto123"),"mybio",null,null,null,null);
 	   	    
 	   	   User hamzaaded=userRepository.save(hamza);
 	       User asmaeaded=userRepository.save(asmae);

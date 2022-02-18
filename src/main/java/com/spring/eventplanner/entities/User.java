@@ -29,6 +29,8 @@ public class User {
  //   @Column(nullable = false)
     String password;
     String bio;
+    @Column(nullable = true, length = 64)
+    private String avatar;
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     List<UserEvent> userEventStatus;
@@ -36,6 +38,5 @@ public class User {
 
     private List<Contact> followers;
     @OneToMany(mappedBy="from")
-
     private List<Contact> following;
 }
