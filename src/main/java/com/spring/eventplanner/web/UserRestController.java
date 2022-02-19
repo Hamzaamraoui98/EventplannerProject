@@ -56,6 +56,16 @@ public class UserRestController {
         Contact contact=new Contact(null,from,to);
         return contactRepository.save(contact);
     }
+    
+    //supprimer un contact
+    @DeleteMapping(path="/{username}/{username2}/deletecontact")
+    public ResponseEntity<String> deletecontact(@PathVariable String username,@PathVariable String username2){
+        System.out.println("je vais supprimer un contact");
+        User from=userRepository.findByUsername(username).get(0);
+        User to=userRepository.findByUsername(username2).get(0);
+        contactRepository.deleteByFromandTo(from, to);
+        return new ResponseEntity<String>("contact is deleted successfully.!", HttpStatus.OK);
+    }
 
     /*
     @GetMapping(path="{username}/getcontact/")

@@ -166,12 +166,16 @@ public class EventRestController {
 
     @PutMapping(path = "{username}/events/change-status")
     public ResponseEntity<UserEvent> updateEvent(@PathVariable String username,@RequestBody UserEvent userEvent) {
-
+    	Event e= (eventRepository.getById(userEvent.getId().getEventId()));
+    	//System.out.println(e.getTitle());
         UserEventId key = userEvent.getId();
-        UserEvent toUpdate = userEventRepository.findById(key).get();
+        //Event e=eventRepository.getById(userEvent.getId().getEventId());
+        UserEvent toUpdate =  null;
+        toUpdate= (userEventRepository.findById(key).isPresent()) ? userEventRepository.findById(key).get():userEvent;
         toUpdate.setStatut(userEvent.getStatut());
+        toUpdate.setEvent(e);
         UserEvent updatedUserEvent = userEventRepository.save(toUpdate);
-
+        
         return new ResponseEntity<>(updatedUserEvent, HttpStatus.OK);
     }
 

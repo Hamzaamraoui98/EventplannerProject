@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
+
 import java.util.Date;
 import java.util.List;
 @Entity
@@ -19,6 +21,8 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
+    @Column()
+    Boolean isPublic;
     @Column(nullable=false)
     String title;
     String adresse;

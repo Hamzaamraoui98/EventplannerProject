@@ -86,6 +86,9 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/gettypeevents")// Should not be done in Production
 				.and().ignoring()
 
+				.antMatchers(HttpMethod.DELETE, "/deletecontact/**")// Should not be done in Production
+				.and().ignoring()				
+				
 				.antMatchers("/h2-console/**/**");// Should not be done in Production
 	}
 }

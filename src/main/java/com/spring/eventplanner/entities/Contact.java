@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 @Entity
+@NamedQuery(name="Contact.deleteByFromandTo" , query="delete from Contact y where y.from = ?1 and y.to = ?2")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

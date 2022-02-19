@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 import org.hibernate.annotations.Immutable;
@@ -16,7 +18,7 @@ import org.hibernate.annotations.Immutable;
 @NoArgsConstructor
 @Data
 
-public class UserEvent {
+public class UserEvent implements Serializable {
     public static int STATUS_CREATOR = 1;
     public static int STATUS_INVITED = 2;
     public static int STATUS_ACCEPTED = 3;

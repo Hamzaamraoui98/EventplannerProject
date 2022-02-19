@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.Arrays;
 import java.util.Date;
 
 
@@ -59,11 +60,11 @@ public class EventPlannerApplication {
            
 	       
 	       //initialize database with events
-	       Event event1=new Event(null,"conference sur l'etude a  l'etranger","83160 La Valette-du-Var","une conference organisee par le service des relations internationl",new Date(),new Date(),null,typeEventRepository.findAll().get(0),null,null);
-	       eventRepository.save(event1);
-	 	   Event event2=new Event(null,"Silent Wristwatch Film Festival","69100 Villeurbanne","rain assault gang jeans monofilament cyber- 3D-printed marketing. cartel Legba rebar saturation point garage numinous boy gang. gang apophenia physical market nodality digital weathered vinyl. render-farm boat office kanji garage -space car shoes. footage stimulate futurity franchise realism sign sensory office.",new Date(),new Date(),null, typeEventRepository.findAll().get(1),null,null);
+	       Event event1=new Event(null,true,"conference sur l'etude a  l'etranger","83160 La Valette-du-Var","une conference organisee par le service des relations internationl",new Date(),new Date(),null,typeEventRepository.findAll().get(0),null,null);
+	       event1=eventRepository.save(event1);
+	 	   Event event2=new Event(null,true,"Silent Wristwatch Film Festival","69100 Villeurbanne","rain assault gang jeans monofilament cyber- 3D-printed marketing. cartel Legba rebar saturation point garage numinous boy gang. gang apophenia physical market nodality digital weathered vinyl. render-farm boat office kanji garage -space car shoes. footage stimulate futurity franchise realism sign sensory office.",new Date(),new Date(),null, typeEventRepository.findAll().get(1),null,null);
 	       eventRepository.save(event2);
-	       Event event3=new Event(null,"Augmented Reality Dolphin Drone Demo","7 Rue Linois, 75015 Paris","convenience store advert DIY A.I. franchise warehouse neural uplink. singularity sensory denim Tokyo vinyl skyscraper meta- skyscraper. marketing disposable tower knife plastic artisanal euro-pop concrete. hotdog cardboard dolphin network assassin dolphin receding dome. apophenia woman disposable Kowloon realism long-chain hydrocarbons boat tank-traps.",new Date(),new Date(),null, typeEventRepository.findAll().get(3),null,null);
+	       Event event3=new Event(null,false,"Augmented Reality Dolphin Drone Demo","7 Rue Linois, 75015 Paris","convenience store advert DIY A.I. franchise warehouse neural uplink. singularity sensory denim Tokyo vinyl skyscraper meta- skyscraper. marketing disposable tower knife plastic artisanal euro-pop concrete. hotdog cardboard dolphin network assassin dolphin receding dome. apophenia woman disposable Kowloon realism long-chain hydrocarbons boat tank-traps.",new Date(),new Date(),null, typeEventRepository.findAll().get(3),null,null);
 	       eventRepository.save(event3);
 	       
 	       userEventRepository.save(new UserEvent(new UserEventId(hamzaaded.getId(), event1.getId()),hamza,event1,1));
@@ -79,8 +80,9 @@ public class EventPlannerApplication {
 //           userRepository.findAll().forEach(user -> {
 //                System.out.println(user.getFirstname());
 //            });
-           User user=userRepository.findByUsername("asmaemajdoub").get(0);
-           System.out.println(user.getUsername());
+//           User user=userRepository.findByUsername("asmaemajdoub").get(0);
+//           System.out.println(user.getUsername());
+//           
           
        };
 
