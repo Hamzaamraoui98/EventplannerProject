@@ -67,17 +67,17 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
 //		.antMatchers(HttpMethod.PUT, authenticationPath)
 				.antMatchers(HttpMethod.OPTIONS, "/**")
 				.and().ignoring()
-				.antMatchers(HttpMethod.GET, "/**/events/**" // Other Stuff You want to Ignor
-						//
-						)
-				.and().ignoring()
-				.antMatchers(HttpMethod.POST, "/users" // Other Stuff You want to Ignor
-						//
+				.antMatchers(HttpMethod.POST, "/users" // Other Stuff You want to Igno
 				)
 				.and().ignoring()
+				.antMatchers(HttpMethod.GET, "/events/**" // Other Stuff You want to Igno
+				)
+				.and().ignoring()
+               /*
 				.antMatchers(HttpMethod.GET, "/user/**" // Other Stuff You want to Ignor
 						//
-				)
+				)*/
+				/*
 				.and().ignoring()
 				.antMatchers(HttpMethod.GET, "/users")// Should not be done in Production
 				.and().ignoring()
@@ -86,9 +86,12 @@ public class JWTWebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/gettypeevents")// Should not be done in Production
 				.and().ignoring()
 
+
 				.antMatchers(HttpMethod.DELETE, "/deletecontact/**")// Should not be done in Production
 				.and().ignoring()				
 				
+
+*/
 				.antMatchers("/h2-console/**/**");// Should not be done in Production
 	}
 }
