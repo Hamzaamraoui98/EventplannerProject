@@ -125,7 +125,7 @@ public class UserRestController {
                         .body(resource);
             } else {
                 System.out.println("Profile photo not found for user " + userId);
-                return ResponseEntity.status(HttpStatus.OK).build();
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();

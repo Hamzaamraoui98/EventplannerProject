@@ -38,45 +38,45 @@ public class EventPlannerApplication {
 
 */
            //initialiser databse par des users
-    	   User hamza=new User(null,"hamza","amraoui","hamzaamraoui",null,"amraouihamza50@gmail.com",bCryptPasswordEncoder().encode("hamza123"),"mybio",null,null,null,null);
-	   	   User asmae=new User(null,"asmae","majdoub","asmaemajdoub",null,"asmaemajdoub@gmail.com",bCryptPasswordEncoder().encode("asmae123"),"mybio",null,null,null,null);
-	   	   User alberto=new User(null,"alberto","rodriguez","albertorod",null,"alberto@gmail.com",bCryptPasswordEncoder().encode("alberto123"),"mybio",null,null,null,null);
-	   	    
-	   	   User hamzaaded=userRepository.save(hamza);
-	       User asmaeaded=userRepository.save(asmae);
-	       User albertoaded=userRepository.save(alberto);
-	       contactRepository.save(new Contact(null,hamzaaded,asmaeaded));
-	       //initisaliser database par des types d evenement
-           typeEventRepository.save(new TypeEvent(null,"Conference",null));
-           typeEventRepository.save(new TypeEvent(null,"Meeting",null));
-           typeEventRepository.save(new TypeEvent(null,"Party",null));
-           typeEventRepository.save(new TypeEvent(null,"Concert",null));
-           typeEventRepository.save(new TypeEvent(null,"Weeding",null));
-           typeEventRepository.save(new TypeEvent(null,"Other",null));
-           
-           typeEventRepository.findAll().forEach(type -> {
-               System.out.println(type.getName());
-           });
-           
-	       
-	       //initialize database with events
-	       Event event1=new Event(null,true,"conference sur l'etude a  l'etranger","83160 La Valette-du-Var","une conference organisee par le service des relations internationl",new Date(),new Date(),null,typeEventRepository.findAll().get(0),null,null);
-	       event1=eventRepository.save(event1);
-	 	   Event event2=new Event(null,true,"Silent Wristwatch Film Festival","69100 Villeurbanne","rain assault gang jeans monofilament cyber- 3D-printed marketing. cartel Legba rebar saturation point garage numinous boy gang. gang apophenia physical market nodality digital weathered vinyl. render-farm boat office kanji garage -space car shoes. footage stimulate futurity franchise realism sign sensory office.",new Date(),new Date(),null, typeEventRepository.findAll().get(1),null,null);
-	       eventRepository.save(event2);
-	       Event event3=new Event(null,false,"Augmented Reality Dolphin Drone Demo","7 Rue Linois, 75015 Paris","convenience store advert DIY A.I. franchise warehouse neural uplink. singularity sensory denim Tokyo vinyl skyscraper meta- skyscraper. marketing disposable tower knife plastic artisanal euro-pop concrete. hotdog cardboard dolphin network assassin dolphin receding dome. apophenia woman disposable Kowloon realism long-chain hydrocarbons boat tank-traps.",new Date(),new Date(),null, typeEventRepository.findAll().get(3),null,null);
-	       eventRepository.save(event3);
-	       
-	       userEventRepository.save(new UserEvent(new UserEventId(hamzaaded.getId(), event1.getId()),hamza,event1,1));
-	       userEventRepository.save(new UserEvent(new UserEventId(asmaeaded.getId(), event1.getId()),asmae,event1,2));
-	         
-	       userEventRepository.save(new UserEvent(new UserEventId(asmaeaded.getId(), event2.getId()),asmae,event2,1));
-	       userEventRepository.save(new UserEvent(new UserEventId(hamzaaded.getId(), event2.getId()),hamza,event2,2));
-	       userEventRepository.save(new UserEvent(new UserEventId(albertoaded.getId(), event2.getId()),alberto,event2,3));
-	       
-	       userEventRepository.save(new UserEvent(new UserEventId(albertoaded.getId(), event3.getId()),alberto,event3,1));
-	       userEventRepository.save(new UserEvent(new UserEventId(asmaeaded.getId(), event3.getId()),asmae,event3,4));
-	       
+//    	   User hamza=new User(null,"hamza","amraoui","hamzaamraoui",null,"amraouihamza50@gmail.com",bCryptPasswordEncoder().encode("hamza123"),"mybio",null,null,null,null);
+//	   	   User asmae=new User(null,"asmae","majdoub","asmaemajdoub",null,"asmaemajdoub@gmail.com",bCryptPasswordEncoder().encode("asmae123"),"mybio",null,null,null,null);
+//	   	   User alberto=new User(null,"alberto","rodriguez","albertorod",null,"alberto@gmail.com",bCryptPasswordEncoder().encode("alberto123"),"mybio",null,null,null,null);
+//	   	    
+//	   	   User hamzaaded=userRepository.save(hamza);
+//	       User asmaeaded=userRepository.save(asmae);
+//	       User albertoaded=userRepository.save(alberto);
+//	       contactRepository.save(new Contact(null,hamzaaded,asmaeaded));
+//	       //initisaliser database par des types d evenement
+//           typeEventRepository.save(new TypeEvent(null,"Conference",null));
+//           typeEventRepository.save(new TypeEvent(null,"Meeting",null));
+//           typeEventRepository.save(new TypeEvent(null,"Party",null));
+//           typeEventRepository.save(new TypeEvent(null,"Concert",null));
+//           typeEventRepository.save(new TypeEvent(null,"Weeding",null));
+//           typeEventRepository.save(new TypeEvent(null,"Other",null));
+//           
+//           typeEventRepository.findAll().forEach(type -> {
+//               System.out.println(type.getName());
+//           });
+//           
+//	       
+//	       //initialize database with events
+//	       Event event1=new Event(null,true,"conference sur l'etude a  l'etranger","83160 La Valette-du-Var","une conference organisee par le service des relations internationl",new Date(),new Date(),null,typeEventRepository.findAll().get(0),null,null);
+//	       event1=eventRepository.save(event1);
+//	 	   Event event2=new Event(null,true,"Silent Wristwatch Film Festival","69100 Villeurbanne","rain assault gang jeans monofilament cyber- 3D-printed marketing. cartel Legba rebar saturation point garage numinous boy gang. gang apophenia physical market nodality digital weathered vinyl. render-farm boat office kanji garage -space car shoes. footage stimulate futurity franchise realism sign sensory office.",new Date(),new Date(),null, typeEventRepository.findAll().get(1),null,null);
+//	       eventRepository.save(event2);
+//	       Event event3=new Event(null,false,"Augmented Reality Dolphin Drone Demo","7 Rue Linois, 75015 Paris","convenience store advert DIY A.I. franchise warehouse neural uplink. singularity sensory denim Tokyo vinyl skyscraper meta- skyscraper. marketing disposable tower knife plastic artisanal euro-pop concrete. hotdog cardboard dolphin network assassin dolphin receding dome. apophenia woman disposable Kowloon realism long-chain hydrocarbons boat tank-traps.",new Date(),new Date(),null, typeEventRepository.findAll().get(3),null,null);
+//	       eventRepository.save(event3);
+//	       
+//	       userEventRepository.save(new UserEvent(new UserEventId(hamzaaded.getId(), event1.getId()),hamza,event1,1));
+//	       userEventRepository.save(new UserEvent(new UserEventId(asmaeaded.getId(), event1.getId()),asmae,event1,2));
+//	         
+//	       userEventRepository.save(new UserEvent(new UserEventId(asmaeaded.getId(), event2.getId()),asmae,event2,1));
+//	       userEventRepository.save(new UserEvent(new UserEventId(hamzaaded.getId(), event2.getId()),hamza,event2,2));
+//	       userEventRepository.save(new UserEvent(new UserEventId(albertoaded.getId(), event2.getId()),alberto,event2,3));
+//	       
+//	       userEventRepository.save(new UserEvent(new UserEventId(albertoaded.getId(), event3.getId()),alberto,event3,1));
+//	       userEventRepository.save(new UserEvent(new UserEventId(asmaeaded.getId(), event3.getId()),asmae,event3,4));
+//	       
 //           userRepository.findAll().forEach(user -> {
 //                System.out.println(user.getFirstname());
 //            });

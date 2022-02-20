@@ -3,6 +3,7 @@ package com.spring.eventplanner.entities;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,13 +24,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 public class UserVote {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
-    @ManyToOne()
-    @JoinColumn(name = "user_id")
-    @JsonIgnore
-    User user;
+	
+    @EmbeddedId
+    UserEventId id;
     
     @ManyToOne()
     @JoinColumn(name = "dateevent_id")

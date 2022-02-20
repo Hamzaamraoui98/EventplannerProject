@@ -6,6 +6,8 @@ import com.spring.eventplanner.repositories.EventRepository;
 import com.spring.eventplanner.repositories.TypeEventRepository;
 import com.spring.eventplanner.repositories.UserEventRepository;
 import com.spring.eventplanner.repositories.UserRepository;
+import com.spring.eventplanner.repositories.VoteRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 @RestController
@@ -29,6 +32,10 @@ public class EventRestController {
     private UserEventRepository userEventRepository;
     @Autowired
     private DateEventRepository dateEventRepository;
+    @Autowired
+    private VoteRepository voteRepository;
+    
+    
     @PostMapping(path = "{username}/events/add",consumes={"application/json"})
     private void addEvent(@PathVariable String username, @RequestBody Event event) {
     	Event newlyAddedEvent = eventRepository.save(event);
@@ -191,7 +198,45 @@ public class EventRestController {
         return typeEventRepository.findAll();
     }
     
+    @PutMapping(path="/events/{event_id}/{username}/votedate")
+    public ResponseEntity<UserVote> voteforeventdate(@PathVariable Long event_id,@PathVariable String username,@RequestBody DateEvent dateEvent ){
+    	UserVote userVote=new UserVote();
+    	userVote.setDateevent(dateEvent);
+    	userVote.setId(new UserEventId(userRepository.findByUsername(username).get(0).getId(),event_id));
+    	userVote=voteRepository.save(userVote);
+    	// increment or decrement votes !!!
+    	DateEvent ss=dateEventRepository.getById(dateEvent.getId());    	
+    	boolean voted=false;
+    	
+    	for(int i=0;i<ss.getVotes().size();i++) {
+    		System.out.println(ss.getVotes().get(i).getId().getUserId());
+    		if(ss.getVotes().get(i).getId().getUserId() == userVote.getId().getUserId()) {
+    			voted=true;
+    			break;
+    		}
+    	}
+    	if(voted==false) {
+    		ss.getVotes().add(userVote);
+    	}
+        ss=dateEventRepository.save(ss);
+    	return new ResponseEntity<>(userVote,HttpStatus.OK);
     
+    }
+    
+    @GetMapping(path="/events/{event_id}/{username}/datevoted")
+    public ResponseEntity<DateEvent> getDateVoted(@PathVariable String username, @PathVariable Long event_id) {
+    	Long user_id=userRepository.findByUsername(username).get(0).getId();
+    	Event event=eventRepository.getById(event_id);
+    	for(DateEvent ss:event.getEvent_dates()){
+    		for(UserVote vote:ss.getVotes())
+    			if(vote.getId().getUserId() ==user_id) {
+    				System.out.println(ss);
+    		    	return new ResponseEntity<>(ss,HttpStatus.OK);
+    			}
+    	
+    }
+    	return new ResponseEntity<>(null,HttpStatus.OK);
+    }
 }
 
 
