@@ -237,6 +237,16 @@ public class EventRestController {
     }
     	return new ResponseEntity<>(null,HttpStatus.OK);
     }
+    @PutMapping(path="/event/update")
+    public ResponseEntity<Event> updateEvent(@RequestBody Event event)
+    {
+        System.out.println("je vais faire l update de cet evenement "+event.getId());
+
+        if(event.getEvent_dates()==null)
+            dateEventRepository.deleteByEvent(event);
+        Event updatedevent=eventRepository.save(event);
+        return new ResponseEntity<>(updatedevent,HttpStatus.OK);
+    }
 }
 
 

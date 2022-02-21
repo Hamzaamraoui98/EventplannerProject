@@ -24,7 +24,7 @@ public class DateEvent {
 	Date start;
 	Date end;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "event_id")
 	@JsonIgnore
 	Event event;

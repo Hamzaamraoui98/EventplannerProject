@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.Modifying;
 public interface ContactRepository extends JpaRepository<Contact,Long> {
 	@Transactional
 	@Modifying
-	
+
 	void deleteByFromandTo(User from,User to);
 }
