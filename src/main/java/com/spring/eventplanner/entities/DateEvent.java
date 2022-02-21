@@ -28,7 +28,6 @@ public class DateEvent {
 	@JoinColumn(name = "event_id")
 	@JsonIgnore
 	Event event;
-	
     @OneToMany(mappedBy = "dateevent" ,cascade = CascadeType.REMOVE)
     List<UserVote> votes=new ArrayList<UserVote>();
 	

@@ -246,6 +246,7 @@ public class EventRestController {
             dateEventRepository.deleteByEvent(event);
         Event updatedevent=eventRepository.save(event);
         return new ResponseEntity<>(updatedevent,HttpStatus.OK);
+
     }
 }
 
