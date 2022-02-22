@@ -11,6 +11,8 @@ import com.spring.eventplanner.repositories.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
@@ -34,19 +36,26 @@ public class EventRestController {
     private DateEventRepository dateEventRepository;
     @Autowired
     private VoteRepository voteRepository;
-    
+    @Autowired
+    private JavaMailSender javaMailSender;
     
     @PostMapping(path = "{username}/events/add",consumes={"application/json"})
     private void addEvent(@PathVariable String username, @RequestBody Event event) {
+        String title=event.getTitle();
+        List<String> mailsto=new ArrayList<>();
     	Event newlyAddedEvent = eventRepository.save(event);
         User user=userRepository.findByUsername(username).get(0);
         UserEventId key = new UserEventId(user.getId(), newlyAddedEvent.getId());
+        String usernamehost=user.getUsername();
         UserEvent toSave = new UserEvent(key, user, newlyAddedEvent, UserEvent.STATUS_CREATOR);
         userEventRepository.save(toSave);
         System.out.println("nombre d objects usereventstatus="+event.getUserEventStatus().size());
         List <UserEvent> userEventStatus=event.getUserEventStatus();
+        int i=0;
         for (UserEvent oneUserEvent : userEventStatus) {
             User user_invited = oneUserEvent.getUser();
+            mailsto.add(user_invited.getEmail());
+            i++;
             UserEventId key_invited = new UserEventId(user_invited.getId(), newlyAddedEvent.getId());
             toSave = new UserEvent(key_invited, user_invited, newlyAddedEvent, UserEvent.STATUS_INVITED);
             userEventRepository.save(toSave);
@@ -56,8 +65,22 @@ public class EventRestController {
         for(DateEvent onedate:dateEventList){
             dateEventRepository.save(new DateEvent(null,onedate.getStart(),onedate.getEnd(),newlyAddedEvent));
         }
+
+        sendEmail(usernamehost,title,mailsto);
     }
 
+    void sendEmail(String usernamehost,String title,List<String> mailsto) {
+        String[] arraymails = new String[mailsto.size()];
+        mailsto.toArray(arraymails); // fill the array
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setFrom("eventplannerappli@gmail.com");
+        msg.setTo(arraymails);
+        msg.setSubject("New Event Invitation");
+        msg.setText("You have received a new invitation to a new Event \n title of event:" +title+"\nfrom : "+usernamehost+" \n Enter to the app to check more details.\n Best regards \n Event Planner Staff");
+
+        javaMailSender.send(msg);
+
+    }
 
 
     @GetMapping(path="/events")
